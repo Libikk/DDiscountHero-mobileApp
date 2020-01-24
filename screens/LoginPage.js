@@ -1,37 +1,32 @@
 import React, { useState } from 'react';
 import { TextInput, View, Text, Button, Image } from 'react-native';
+import axios from 'axios';
 
 const LoginPage = (props) => {
-    const [ email, setEmail ] = useState('')
-    const [ password, setPassword ] = useState('')
+    const [ email, setEmail ] = useState('');
+    const [ password, setPassword ] = useState('');
+    const [ isError, setIsError ] = useState(false);
     
     const login = () => {
-        console.log('email: ', email);
-        console.log('password: ', password);
         const data = {
             email, 
             password,
         }
-        console.log('data: ', data);
-        fetch('https://ddiscounthero.com/api/auth/login', { 
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            method: 'POST', 
-            body: JSON.stringify(data) 
-        })
-            .then((response) => response.json())
+        setIsError(false)
+
+        axios.post('https://ddiscounthero.com/api/auth/login', data)
             .then(res => {
-                console.log('res: ', res);
-                console.log('props: ', props);
-                //props.setIsUserLoggedIn(true)
+                props.setIsUserLoggedIn(true);
+                console.log('res: ', res.data);
             })
-            .catch(console.error)
+            .catch((err) => {
+                setIsError(true)
+                console.log('err: ', err);
+            })
     }
 
     return (
         <View>
-            <Text>JA PIERDOLE</Text>
             <View >
                 <Image style={{ width: '100%' }} source={require('../assets/images/logo.png')} />
             </View>
@@ -49,6 +44,12 @@ const LoginPage = (props) => {
                     placeholder='Password'
                 />
             </View>
+            {
+                isError && 
+                <View style={{ alignItems:'center' }}>
+                    <Text style={{ padding: 5, textAlign: 'center', marginBottom: 16, color: 'red', borderColor: 'red', borderWidth: 1, borderStyle: 'solid', width: '60%' }}>Invalid email or password.</Text>
+                </View>
+            }
             <Button title="Login" onPress={login}/>
         </View>
     )
