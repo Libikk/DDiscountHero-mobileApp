@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { TextInput, View, Text, Button, Image } from 'react-native';
 import axios from 'axios';
 import updatePushNotificationToken from '../updatePushNotificationToken';
+import appConfig from '../appConfig';
 
 const LoginPage = (props) => {
     const [ email, setEmail ] = useState('');
@@ -15,12 +16,12 @@ const LoginPage = (props) => {
         }
         setIsError(false)
 
-        axios.post('http://192.168.1.103:3000/api/auth/login', data)
+        axios.post(`${appConfig.ddiscountHeroUrl}/api/auth/login`, data)
             .then(res => {
                 props.setIsUserLoggedIn(true);
                 updatePushNotificationToken()
                     .then(e => console.log('Successfully updated  token'))
-                    .catch(console.error);
+                    .catch(err => console.log('Error', err));
             })
             .catch((err) => {
                 setIsError(true)

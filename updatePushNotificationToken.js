@@ -1,7 +1,7 @@
 import { Notifications } from 'expo';
 import axios from 'axios';
 import * as Permissions from 'expo-permissions';
-import { appConfig } from './appConfig';
+import appConfig from './appConfig';
 
 const PUSH_ENDPOINT = `${appConfig.ddiscountHeroUrl}/api/user/updateUserPushNotificationToken`;
 
