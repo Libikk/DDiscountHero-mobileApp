@@ -10,7 +10,6 @@ import {
   View,
 } from 'react-native';
 
-import registerPushNotif from '../registerForPushNotificationsAsync';
 
 import { MonoText } from '../components/StyledText';
 
@@ -113,7 +112,6 @@ function handleLearnMorePress() {
 
 function handlePushNotificationPress() {
   console.log('handlePushNotificationPress: ');
-  console.log('registerPushNotif(): ', registerPushNotif());
 
 }
 
