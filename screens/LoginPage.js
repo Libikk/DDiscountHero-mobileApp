@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { TextInput, View, Text, Button, Image } from 'react-native';
 import axios from 'axios';
+import updatePushNotificationToken from '../updatePushNotificationToken';
 
 const LoginPage = (props) => {
     const [ email, setEmail ] = useState('');
@@ -14,10 +15,12 @@ const LoginPage = (props) => {
         }
         setIsError(false)
 
-        axios.post('https://ddiscounthero.com/api/auth/login', data)
+        axios.post('http://192.168.1.103:3000/api/auth/login', data)
             .then(res => {
                 props.setIsUserLoggedIn(true);
-                console.log('res: ', res.data);
+                updatePushNotificationToken()
+                    .then(e => console.log('Successfully updated  token'))
+                    .catch(console.error);
             })
             .catch((err) => {
                 setIsError(true)
@@ -35,7 +38,7 @@ const LoginPage = (props) => {
                     style={{ marginTop: 20, fontSize: 20 }}
                     value={email}
                     onChangeText={setEmail}
-                    placeholder='email'
+                    placeholder='Email'
                     />
                 <TextInput 
                     style={{ marginTop: 20, fontSize: 20 }}
@@ -47,7 +50,7 @@ const LoginPage = (props) => {
             {
                 isError && 
                 <View style={{ alignItems:'center' }}>
-                    <Text style={{ padding: 5, textAlign: 'center', marginBottom: 16, color: 'red', borderColor: 'red', borderWidth: 1, borderStyle: 'solid', width: '60%' }}>Invalid email or password.</Text>
+                    <Text style={{ padding: 5, textAlign: 'center', marginBottom: 16, color: 'red', borderColor: 'red', borderWidth: 1, borderStyle: 'solid', width: '60%' }}>Invalid email or password</Text>
                 </View>
             }
             <Button title="Login" onPress={login}/>
