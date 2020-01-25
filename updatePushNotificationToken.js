@@ -1,11 +1,12 @@
 import { Notifications } from 'expo';
 import axios from 'axios';
 import * as Permissions from 'expo-permissions';
+import { appConfig } from './appConfig';
 
-const PUSH_ENDPOINT = 'http://192.168.1.103:3000/api/user/updateUserPushNotificationToken'
+const PUSH_ENDPOINT = `${appConfig.ddiscountHeroUrl}/api/user/updateUserPushNotificationToken`;
 
 const updatePushNotificationToken = async () => {
-    const permissionsResponse = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+    const permissionsResponse = await Permissions.askAsync(Permissions.NOTIFICATIONS).catch(console.error);;
 
     if (permissionsResponse.status !== 'granted') {
         alert('No notification permissions!');
