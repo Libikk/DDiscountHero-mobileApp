@@ -7,6 +7,7 @@ import { Ionicons } from '@expo/vector-icons';
 
 import AppNavigator from './navigation/AppNavigator';
 import LoginPage from './screens/LoginPage';
+import Home from './screens/Home';
 
 export default function App(props) {
   const [isLoadingComplete, setLoadingComplete] = useState(false);
@@ -22,23 +23,25 @@ export default function App(props) {
     );
   }
 
+  
   if (!isUserLoggedIn) {
-      return (
+    return (
       <View style={styles.container}>
         {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
         <LoginPage setIsUserLoggedIn={setIsUserLoggedIn}/>
       </View>
      )
-  }
+    }
+    
+    if (isUserLoggedIn) {
+      return (
+        <View style={styles.container}>
+          {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+          <Home />
+        </View>
+      );
+    }
   
-  if (isUserLoggedIn) {
-    return (
-      <View style={styles.container}>
-        {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-        <AppNavigator />
-      </View>
-    );
-  }
 }
 
 async function loadResourcesAsync() {
