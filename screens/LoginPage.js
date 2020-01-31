@@ -3,6 +3,7 @@ import { TextInput, View, Text, Button, Image, ImageBackground } from 'react-nat
 import axios from 'axios';
 import updatePushNotificationToken from '../updatePushNotificationToken';
 import appConfig from '../appConfig';
+import { Sentry } from '../errorHandler';
 
 const LoginPage = (props) => {
     const [ email, setEmail ] = useState('');
@@ -25,7 +26,12 @@ const LoginPage = (props) => {
             })
             .catch((err) => {
                 setIsError(true)
+
                 console.log('err: ', err);
+                Sentry.withScope((scope) => {
+                    scope.setExtra('email', { email });
+                    Sentry.captureException(err);
+                });
             })
     }
 
