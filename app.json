@@ -28,7 +28,8 @@
       "bundleIdentifier": "ddiscount.hero"
     },
     "android": {
-      "package": "ddiscount.hero"
+      "package": "ddiscount.hero",
+      "versionCode":"1.0.2"
     },
     "description": "DDiscount Hero app"
   }
