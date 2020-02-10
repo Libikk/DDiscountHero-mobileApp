@@ -1,17 +1,32 @@
 import { AppLoading } from 'expo';
 import { Asset } from 'expo-asset';
 import * as Font from 'expo-font';
-import React, { useState } from 'react';
-import { Platform, StatusBar, StyleSheet, View } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { Platform, StatusBar, StyleSheet, View, Text } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 import AppNavigator from './navigation/AppNavigator';
 import LoginPage from './screens/LoginPage';
 import Home from './screens/Home';
+import ProductList from './screens/ProductList';
+import { Notifications } from 'expo';
 
-export default function App(props) {
+export default App = (props) => {
+  const [discountedProducts, setDiscountedProducts] = useState([]);
+  const handleNotification = notification => setDiscountedProducts(notification.data.products);
+
+  useEffect(() => {
+    Notifications.addListener(handleNotification)
+  }, []);
+
+
+
   const [isLoadingComplete, setLoadingComplete] = useState(false);
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(false)
+
+  if (discountedProducts.length) {
+    return <ProductList products={discountedProducts} setDiscountedProducts={setDiscountedProducts}/>
+  }
 
   if (!isLoadingComplete && !props.skipLoadingScreen) {
     return (
