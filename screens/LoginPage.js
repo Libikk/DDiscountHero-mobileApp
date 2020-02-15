@@ -4,7 +4,8 @@ import axios from 'axios';
 import updatePushNotificationToken from '../updatePushNotificationToken';
 import appConfig from '../appConfig';
 import { Sentry } from '../errorHandler';
-import {  saveData, loadData } from '../services/localStorageService';
+import { saveData, loadData } from '../services/localStorageService';
+import { getCookie } from '../services/authorizeUtils';
 
 const LoginPage = (props) => {
     const [ email, setEmail ] = useState('');
@@ -27,7 +28,9 @@ const LoginPage = (props) => {
 
         axios.post(`${appConfig.ddiscountHeroUrl}/api/auth/login`, data)
             .then(res => {
-                props.setIsUserLoggedIn(true);
+                const token = getCookie('access_token', res.headers['set-cookie'][0]);
+                saveData('userToken', token)
+
                 updatePushNotificationToken()
                     .then(e => console.log('Successfully updated  token'))
                     .catch(err => console.log('Error', err));
@@ -42,15 +45,11 @@ const LoginPage = (props) => {
                 });
             })
     }
-    const savedataa = () => {
-        saveData('testData', 'ASDJNAKSNDJndjksabnkjBNDJKSNASKJFBDJKBFDIJLSBFLSDBFSDJKFBKLDSFKJSDBNFKDSLK----')
-            .then(e => console.log('Successfully saved Data', e))
-            .catch(err => console.log('Error savingData', err));
-    }
+
     const loadStoree = () => {
-        loadData('testData')
-            .then(e => console.log('Successfully loadedData', e))
-            .catch(err => console.log('Error loadStoree', err));
+        loadData('userToken')
+            .then(e => console.log('Successfully userToken', e))
+            .catch(err => console.log('Error userToken', err));
     }
 
     return (
@@ -58,7 +57,6 @@ const LoginPage = (props) => {
             <View style={{ width: '100%', justifyContent: 'center', alignItems: 'center', }}>
                 <Image style={{ resizeMode: 'center' }} source={require('../assets/images/logo.png')} />
             </View>
-            <Button color='#249624' title="savedata" onPress={savedataa}/>
             <Button color='#249624' title="loadStore" onPress={loadStoree}/>
             <View style={{ margin: 40, alignItems:'center' }}>
                 <TextInput 

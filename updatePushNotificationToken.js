@@ -14,8 +14,7 @@ const updatePushNotificationToken = async () => {
     }
     
     let token = await Notifications.getExpoPushTokenAsync().catch(console.error);
-    console.log('token: ', token);
-    // return axios.post(PUSH_ENDPOINT, { token });
+    return axios.post(PUSH_ENDPOINT, { token });
 }
 
 
