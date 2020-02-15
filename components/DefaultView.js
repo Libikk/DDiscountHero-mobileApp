@@ -14,37 +14,23 @@ import { authorize } from '../services/authorizeUtils';
 export default DefaultView = (props) => {
   const [discountedProducts, setDiscountedProducts] = useState([]);
   const handleNotification = notification => setDiscountedProducts(notification.data.products);
-  const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
-  const [userData, setUserData] = useContext(UserDataContext)
-  
+
   useEffect(() => {
     Notifications.addListener(handleNotification)
-    console.log('useEffect: ');
-    authorize()
-      .then(res => {
-        setUserData(res)
-        setIsUserLoggedIn(true)
-        console.log('userData: ', userData);
-      })
-      .catch(err => {
-        console.log('err: ', err);
-      })
 
   }, []);
 
-  const initialRouteName = isUserLoggedIn ? 'Home' : 'LoginPage';
-  console.log('initialRouteName: ', initialRouteName);
-
+  const initialRouteName = props.userData ? 'Home' : 'LoginPage';
   const Stack = createStackNavigator();
 
   return (
     <NavigationContainer 
-    onStateChange={state => console.log('New state is', state)}
+      onStateChange={state => console.log('New state is', state)}
     >
-    <Stack.Navigator initialRouteName={initialRouteName}>
-        <Stack.Screen name="Home" component={Home} options={{ headerShown: false }}/>
-        <Stack.Screen name="LoginPage" component={LoginPage} />
-    </Stack.Navigator>
+      <Stack.Navigator initialRouteName={initialRouteName}>
+          <Stack.Screen name="Home" component={Home} options={{ headerShown: false }}/>
+          <Stack.Screen name="LoginPage" component={LoginPage} />
+      </Stack.Navigator>
     </NavigationContainer>
   )
 }
