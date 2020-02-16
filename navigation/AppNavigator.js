@@ -1,12 +1,23 @@
-import React from 'react';
-import { createAppContainer, createSwitchNavigator } from 'react-navigation';
+import React, { useContext } from 'react'
+import Home from '../screens/Home';
+import LoginPage from '../screens/LoginPage';
+import { UserDataContext } from '../Store';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import AppBottomTabNavigator from '../navigation/AppBottomTabNavigator';
 
-import MainTabNavigator from './MainTabNavigator';
+const Stack = createStackNavigator();
 
-export default createAppContainer(
-  createSwitchNavigator({
-    // You could add another route here for authentication.
-    // Read more at https://reactnavigation.org/docs/en/auth-flow.html
-    Main: MainTabNavigator,
-  })
-);
+export default AppNavigator = () => {
+  const [userData] = useContext(UserDataContext);
+
+  const initialRouteName = userData ? 'Home' : 'LoginPage';
+    return (
+        <NavigationContainer>
+          <Stack.Navigator initialRouteName={initialRouteName}>
+              <Stack.Screen name="Home" component={AppBottomTabNavigator} options={{ headerShown: false }} />
+              <Stack.Screen name="LoginPage" component={LoginPage} options={{ headerShown: false }} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      )
+}

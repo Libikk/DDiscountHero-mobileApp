@@ -1,15 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { TextInput, View, Text, Button, Image, ImageBackground } from 'react-native';
 import axios from 'axios';
-import updatePushNotificationToken from '../updatePushNotificationToken';
+import updatePushNotificationToken from '../services/updatePushNotificationToken';
 import appConfig from '../appConfig';
 import { Sentry } from '../errorHandler';
+import { saveData } from '../services/localStorageService';
+import { getCookie } from '../services/authorizeUtils';
 
 const LoginPage = (props) => {
     const [ email, setEmail ] = useState('');
     const [ password, setPassword ] = useState('');
     const [ isError, setIsError ] = useState(false);
     
+
+    const saveToken = (res) => {
+        const token = getCookie('access_token', res.headers['set-cookie'][0]);
+        saveData('userToken', token)
+    }
+
     const login = () => {
         const data = {
             email, 
@@ -19,7 +27,8 @@ const LoginPage = (props) => {
 
         axios.post(`${appConfig.ddiscountHeroUrl}/api/auth/login`, data)
             .then(res => {
-                props.setIsUserLoggedIn(true);
+                saveToken(res);
+                props.navigation.navigate('Home')
                 updatePushNotificationToken()
                     .then(e => console.log('Successfully updated  token'))
                     .catch(err => console.log('Error', err));
@@ -29,7 +38,7 @@ const LoginPage = (props) => {
 
                 console.log('err: ', err);
                 Sentry.withScope((scope) => {
-                    scope.setExtra('email', { email });
+                    scope.setExtra('email', { email, isDev: __DEV__ });
                     Sentry.captureException(err);
                 });
             })

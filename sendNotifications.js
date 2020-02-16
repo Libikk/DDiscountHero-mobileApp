@@ -5,7 +5,8 @@ let expo = new expooo();
 
 // Create the messages that you want to send to clents
 let messages = [];
-for (let pushToken of ['ExponentPushToken[mDzFqtDUsjENsmxaW0GsKL]']) {
+
+for (let pushToken of ['ExponentPushToken[4-Xk9qKWOkPtJtXFuyFCB5]']) {
   // Each push token looks like ExponentPushToken[xxxxxxxxxxxxxxxxxxxxxx]
 
   // Check that all your push tokens appear to be valid Expo push tokens
@@ -19,7 +20,7 @@ for (let pushToken of ['ExponentPushToken[mDzFqtDUsjENsmxaW0GsKL]']) {
     to: pushToken,
     sound: 'default',
     body: 'This is a test notification',
-    data: { withSome: 'data' },
+    data: { products:[{"productUrl":"https://groceries.asda.com/product/kids-yogurts/frubes-strawberry-flavour-yogurt/1000078555632","hostNameUrl":"https://groceries.asda.com","imageUrl":"https://ui.assets-asda.com/dm/asdagroceries/3329770062481_T1?defaultImage=asdagroceries/noImage&resMode=sharp2&id=K2mTf0&fmt=jpg&fit=constrain,1&wid=288&hei=288","productName":"Frubes Strawberry Flavour Yogurt","productId":12,"productDiscountedPrice":"95p","productPrice":"£2.00"},{"productUrl":"https://www.debenhams.com/webapp/wcs/stores/servlet/prod_10701_10001_280010307045_-1","hostNameUrl":"https://www.debenhams.com","imageUrl":"https://debenhams.scene7.com/is/image/Debenhams//280010307045?wid=675&hei=675&fmt=webp&qlt=90","productName":"Dark Blue '501' 'Sponge Street' Straight Jeans","productId":35,"productDiscountedPrice":"Now £64.00","productPrice":"Was £80.00"},{"productUrl":"https://groceries.morrisons.com/webshop/product/Dr-Beckmann-Colour--Dirt-Collector-/358858011?gclid=CjwKCAiAg9rxBRADEiwAxKDTujtl4OHWRxXqhL81ZsCejLF3hXR_M5UyjQzpgVEB79TifJl4p7cvzBoC_NgQAvD_BwE&gclsrc=aw.ds","hostNameUrl":"https://groceries.morrisons.com","imageUrl":"https://groceries.morrisons.com/productImages/358/358858011_0_170x170.jpg?identifier=80aba395e7e49de3adbe10187f384ec3","productName":null,"productId":158,"productDiscountedPrice":"\n                    £3\n                ","productPrice":"\n                    £4.50\n                "}] },
   })
 }
 
