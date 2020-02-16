@@ -9,7 +9,7 @@ const Home = (props) => {
             </View>
            <View>
                <Text style={{ marginTop: 30, textAlign: 'center', fontWeight: 'bold', fontSize: 18, lineHeight: 30 }}>
-                    Product sales in one place 🚀
+                    Discounts on products you love in one place 🚀
                 </Text>
            </View>
         </View>
