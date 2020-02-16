@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { TextInput, View, Text, Button, Image, ImageBackground } from 'react-native';
 import axios from 'axios';
-import updatePushNotificationToken from '../updatePushNotificationToken';
+import updatePushNotificationToken from '../services/updatePushNotificationToken';
 import appConfig from '../appConfig';
 import { Sentry } from '../errorHandler';
-import { saveData, loadData } from '../services/localStorageService';
+import { saveData } from '../services/localStorageService';
 import { getCookie } from '../services/authorizeUtils';
 
 const LoginPage = (props) => {
@@ -44,18 +44,11 @@ const LoginPage = (props) => {
             })
     }
 
-    const loadStoree = () => {
-        loadData('userToken')
-            .then(e => console.log('Successfully userToken', e))
-            .catch(err => console.log('Error userToken', err));
-    }
-
     return (
         <View style={{ padding: 30 }}>
             <View style={{ width: '100%', justifyContent: 'center', alignItems: 'center', }}>
                 <Image style={{ resizeMode: 'center' }} source={require('../assets/images/logo.png')} />
             </View>
-            <Button color='#249624' title="loadStore" onPress={loadStoree}/>
             <View style={{ margin: 40, alignItems:'center' }}>
                 <TextInput 
                     style={{ marginTop: 20, fontSize: 20 }}
