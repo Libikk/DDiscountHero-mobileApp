@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { TextInput, View, Text, Image } from 'react-native';
+import { TextInput, View, Text, Image, AsyncStorage, Button } from 'react-native';
 
 const Home = (props) => {
     return (
         <View style={{ padding: 30 }}>
+            {/* <Button onPress={() => AsyncStorage.removeItem('userToken')} title="temove token"></Button> */}
             <View style={{ width: '100%', justifyContent: 'center', alignItems: 'center', }}>
                 <Image style={{ resizeMode: 'center' }} source={require('../assets/images/logo.png')} />
             </View>
