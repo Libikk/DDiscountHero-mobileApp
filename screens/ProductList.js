@@ -43,7 +43,7 @@ const ProductList = () => {
             <FlatList
                 data={sortedPromotion}
                 renderItem={({item}) => <Product product={item}/>}
-                keyExtractor={item => item.productId}
+                keyExtractor={item => item.productId.toString()}
             />
         </View>
     </SafeAreaView>
