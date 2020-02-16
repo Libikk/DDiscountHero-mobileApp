@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { TextInput, View, Text, Image, AsyncStorage, Button } from 'react-native';
-
 const Home = (props) => {
     return (
         <View style={{ padding: 30 }}>
@@ -10,10 +9,7 @@ const Home = (props) => {
             </View>
            <View>
                <Text style={{ marginTop: 30, textAlign: 'center', fontWeight: 'bold', fontSize: 18, lineHeight: 30 }}>
-                   Success!
-                </Text>
-               <Text style={{ marginTop: 30, textAlign: 'center', fontWeight: 'bold', fontSize: 18, lineHeight: 30 }}>
-                   Application is ready to send you notifications :)
+                    Product sales in one place 🚀
                 </Text>
            </View>
         </View>

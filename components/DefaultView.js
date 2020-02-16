@@ -4,6 +4,7 @@ import { Notifications } from 'expo';
 import { Text } from 'react-native';
 import { UserDataContext } from '../Store';
 import AppNavigator from '../navigation/AppNavigator';
+import AppBottomTabNavigator from '../navigation/AppBottomTabNavigator';
 import { authorize } from '../services/authorizeUtils';
 import { Sentry } from '../errorHandler';
 import { loadData } from '../services/localStorageService';

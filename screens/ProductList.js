@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { UserProducts } from '../services/userProducts';
 import { TextInput, View, Text, Button, Image, ImageBackground, StyleSheet, ScrollView, SafeAreaView, FlatList   } from 'react-native';
 
 const Product = (props) => {
     const { productUrl, hostName, imageUrl, productName, productId, isActive, isPromo, productDiscountedPrice, productPrice } = props.product;
-    console.log('isPromo', props)
     return (
     <View style={styles.singleProductWrapper}>
         <Text>{hostName}</Text>
         <View>
-            <Image style={{ resizeMode: 'center', width: 150, height: 150 }} source={{ uri: imageUrl }} />
+            {imageUrl ? <Image style={{ resizeMode: 'center', width: 150, height: 150 }} source={{ uri: imageUrl }} /> : null}
         </View>
         <Text>{productName}</Text>
         <View style={styles.body}>
@@ -28,23 +28,25 @@ const Product = (props) => {
     </View>)
 }
 
-const ProductList = (props) => {
+const ProductList = () => {
+    const [userProducts, setUserProducts] = useState([])
+    useEffect(() => {
+        UserProducts.getUserProducts()
+            .then(userProd => setUserProducts(userProd))
+            .catch(console.log)
+    }, [])
 
+    const sortedPromotion = userProducts.sort((a,b) => b.isPromo - a.isPromo)
     return (
-        <SafeAreaView>
-            <ScrollView>
-                <View style={styles.container}>
-                    <View>
-                        <Button title={'X'} onPress={() => props.setDiscountedProducts([])}/>
-                    </View>
-                    <FlatList
-                        data={props.products}
-                        renderItem={({item}) => <Product product={item}/>}
-                        keyExtractor={item => item.productId}
-                    />
-                </View>
-            </ScrollView>
-        </SafeAreaView>
+    <SafeAreaView>
+        <View style={styles.container}>
+            <FlatList
+                data={sortedPromotion}
+                renderItem={({item}) => <Product product={item}/>}
+                keyExtractor={item => item.productId}
+            />
+        </View>
+    </SafeAreaView>
     )
 }
 

@@ -4,6 +4,7 @@ import LoginPage from '../screens/LoginPage';
 import { UserDataContext } from '../Store';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import AppBottomTabNavigator from '../navigation/AppBottomTabNavigator';
 
 const Stack = createStackNavigator();
 
@@ -12,12 +13,10 @@ export default AppNavigator = () => {
 
   const initialRouteName = userData ? 'Home' : 'LoginPage';
     return (
-        <NavigationContainer 
-          onStateChange={state => console.log('New state is', state)}
-        >
+        <NavigationContainer>
           <Stack.Navigator initialRouteName={initialRouteName}>
-              <Stack.Screen name="Home" component={Home} options={{ headerShown: false }}/>
-              <Stack.Screen name="LoginPage" component={LoginPage} />
+              <Stack.Screen name="Home" component={AppBottomTabNavigator} options={{ headerShown: false }} />
+              <Stack.Screen name="LoginPage" component={LoginPage} options={{ headerShown: false }} />
           </Stack.Navigator>
         </NavigationContainer>
       )
