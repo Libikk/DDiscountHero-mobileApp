@@ -33,7 +33,7 @@
     },
     "android": {
       "package": "ddiscount.hero",
-      "versionCode": 2
+      "versionCode": 3
     },
     "description": "DDiscount Hero app"
   }
