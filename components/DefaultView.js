@@ -5,6 +5,8 @@ import { Text } from 'react-native';
 import { UserDataContext } from '../Store';
 import AppNavigator from '../navigation/AppNavigator';
 import { authorize } from '../services/authorizeUtils';
+import { Sentry } from '../errorHandler';
+import { loadData } from '../services/localStorageService';
 
 export default DefaultView = (props) => {
   const [discountedProducts, setDiscountedProducts] = useState([]);
@@ -18,7 +20,13 @@ export default DefaultView = (props) => {
     Notifications.addListener(handleNotification)
     authorize()
       .then(res => setUserData(res))
-      .catch(console.log)
+      .catch(async (err) => {
+        const userToken = await loadData('userToken');
+        Sentry.withScope((scope) => {
+          scope.setExtra('userData', { userToken, isDev: __DEV__ });
+          Sentry.captureException(err);
+        });
+      })
       .finally(() => setIsLoading(false));
   }, []);
 

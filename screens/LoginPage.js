@@ -38,7 +38,7 @@ const LoginPage = (props) => {
 
                 console.log('err: ', err);
                 Sentry.withScope((scope) => {
-                    scope.setExtra('email', { email });
+                    scope.setExtra('email', { email, isDev: __DEV__ });
                     Sentry.captureException(err);
                 });
             })
