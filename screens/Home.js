@@ -1,10 +1,20 @@
 import React, { useState } from 'react';
-import { TextInput, View, Text, Button, Image, ImageBackground } from 'react-native';
+import { TextInput, View, Text, Button, Image, ImageBackground, AsyncStorage } from 'react-native';
 
 const Home = (props) => {
-
+    const clearLocalStorage = () => {
+        console.log('clearLocalStorage: ');
+        AsyncStorage.removeItem('userToken')
+            .then(() => {
+                AsyncStorage.getItem('userToken')
+                    .then(console.log)
+                    .catch(console.log)
+            })
+            .catch(console.log)
+    }
     return (
         <View style={{ padding: 30 }}>
+            <Button onPress={clearLocalStorage} title="remove usertoken"></Button>
             <View style={{ width: '100%', justifyContent: 'center', alignItems: 'center', }}>
                 <Image style={{ resizeMode: 'center' }} source={require('../assets/images/logo.png')} />
             </View>

@@ -11,14 +11,13 @@ const LoginPage = (props) => {
     const [ email, setEmail ] = useState('');
     const [ password, setPassword ] = useState('');
     const [ isError, setIsError ] = useState(false);
-
-    // useEffect(() => {
-    //     console.log('req: ');
-    //     axios.post(`${appConfig.ddiscountHeroUrl}/api/auth/authorize`)
-    //         .then(e => console.log('ressponse', e))
-    //         .catch(console.log)
-    //   });
     
+
+    const saveToken = (res) => {
+        const token = getCookie('access_token', res.headers['set-cookie'][0]);
+        saveData('userToken', token)
+    }
+
     const login = () => {
         const data = {
             email, 
@@ -28,9 +27,8 @@ const LoginPage = (props) => {
 
         axios.post(`${appConfig.ddiscountHeroUrl}/api/auth/login`, data)
             .then(res => {
-                const token = getCookie('access_token', res.headers['set-cookie'][0]);
-                saveData('userToken', token)
-
+                saveToken(res);
+                props.navigation.navigate('Home')
                 updatePushNotificationToken()
                     .then(e => console.log('Successfully updated  token'))
                     .catch(err => console.log('Error', err));
