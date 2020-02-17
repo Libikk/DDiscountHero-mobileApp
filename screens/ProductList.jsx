@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { TextInput, View, Text, Button, Image, ImageBackground, StyleSheet, ScrollView, SafeAreaView, FlatList } from 'react-native';
+import { Linking } from 'expo';
 import { UserProducts } from '../services/userProducts';
 
 const Product = (props) => {
@@ -11,6 +12,7 @@ const Product = (props) => {
       <View>
         {imageUrl ? <Image style={{ resizeMode: 'center', width: 150, height: 150 }} source={{ uri: imageUrl }} /> : null}
       </View>
+      <Button onPress={() => Linking.openURL(productUrl)} title="Open product"/>
       <Text>{productName}</Text>
       <View style={styles.body}>
         {(productDiscountedPrice && productPrice)
