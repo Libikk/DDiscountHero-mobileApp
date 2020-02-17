@@ -9,21 +9,22 @@ import { authorize } from '../services/authorizeUtils';
 import { Sentry } from '../errorHandler';
 import { loadData } from '../services/localStorageService';
 
-export default DefaultView = (props) => {
+const DefaultView = (props) => {
   const [discountedProducts, setDiscountedProducts] = useState([]);
 
-  const handleNotification = notification => setDiscountedProducts(notification.data.products);
+  const handleNotification = (notification) => setDiscountedProducts(notification.data.products);
 
   const [, setUserData] = useContext(UserDataContext);
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    Notifications.addListener(handleNotification)
+    Notifications.addListener(handleNotification);
     authorize()
-      .then(res => setUserData(res))
+      .then((res) => setUserData(res))
       .catch(async (err) => {
         const userToken = await loadData('userToken');
         Sentry.withScope((scope) => {
+          // eslint-disable-next-line no-undef
           scope.setExtra('userData', { userToken, isDev: __DEV__ });
           Sentry.captureException(err);
         });
@@ -32,6 +33,8 @@ export default DefaultView = (props) => {
   }, []);
 
   return (
-    isLoading ? <Text>LOADING....</Text> : <AppNavigator {...props}/>
-  )
-}
+    isLoading ? <Text>LOADING....</Text> : <AppNavigator {...props} />
+  );
+};
+
+export default DefaultView;
