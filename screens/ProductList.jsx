@@ -12,7 +12,7 @@ const Product = (props) => {
       <View>
         {imageUrl ? <Image style={{ resizeMode: 'center', width: 150, height: 150 }} source={{ uri: imageUrl }} /> : null}
       </View>
-      <Button onPress={() => Linking.openURL(productUrl)} title="Open product"/>
+      <Button onPress={() => Linking.openURL(productUrl)} title="Open product" />
       <Text>{productName}</Text>
       <View style={styles.body}>
         {(productDiscountedPrice && productPrice)
