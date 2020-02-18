@@ -1,12 +1,13 @@
 const expooo = require('expo-server-sdk').Expo;
 
 // Create a new Expo SDK client
-let expo = new expooo();
+const expo = new expooo();
 
 // Create the messages that you want to send to clents
-let messages = [];
+const messages = [];
 
-for (let pushToken of ['ExponentPushToken[4-Xk9qKWOkPtJtXFuyFCB5]']) {
+// eslint-disable-next-line no-restricted-syntax
+for (const pushToken of ['ExponentPushToken[4-Xk9qKWOkPtJtXFuyFCB5]']) {
   // Each push token looks like ExponentPushToken[xxxxxxxxxxxxxxxxxxxxxx]
 
   // Check that all your push tokens appear to be valid Expo push tokens
@@ -20,8 +21,8 @@ for (let pushToken of ['ExponentPushToken[4-Xk9qKWOkPtJtXFuyFCB5]']) {
     to: pushToken,
     sound: 'default',
     body: 'This is a test notification',
-    data: { products:[{"productUrl":"https://groceries.asda.com/product/kids-yogurts/frubes-strawberry-flavour-yogurt/1000078555632","hostNameUrl":"https://groceries.asda.com","imageUrl":"https://ui.assets-asda.com/dm/asdagroceries/3329770062481_T1?defaultImage=asdagroceries/noImage&resMode=sharp2&id=K2mTf0&fmt=jpg&fit=constrain,1&wid=288&hei=288","productName":"Frubes Strawberry Flavour Yogurt","productId":12,"productDiscountedPrice":"95p","productPrice":"£2.00"},{"productUrl":"https://www.debenhams.com/webapp/wcs/stores/servlet/prod_10701_10001_280010307045_-1","hostNameUrl":"https://www.debenhams.com","imageUrl":"https://debenhams.scene7.com/is/image/Debenhams//280010307045?wid=675&hei=675&fmt=webp&qlt=90","productName":"Dark Blue '501' 'Sponge Street' Straight Jeans","productId":35,"productDiscountedPrice":"Now £64.00","productPrice":"Was £80.00"},{"productUrl":"https://groceries.morrisons.com/webshop/product/Dr-Beckmann-Colour--Dirt-Collector-/358858011?gclid=CjwKCAiAg9rxBRADEiwAxKDTujtl4OHWRxXqhL81ZsCejLF3hXR_M5UyjQzpgVEB79TifJl4p7cvzBoC_NgQAvD_BwE&gclsrc=aw.ds","hostNameUrl":"https://groceries.morrisons.com","imageUrl":"https://groceries.morrisons.com/productImages/358/358858011_0_170x170.jpg?identifier=80aba395e7e49de3adbe10187f384ec3","productName":null,"productId":158,"productDiscountedPrice":"\n                    £3\n                ","productPrice":"\n                    £4.50\n                "}] },
-  })
+    data: { products: [{ productUrl: 'https://groceries.asda.com/product/kids-yogurts/frubes-strawberry-flavour-yogurt/1000078555632', hostNameUrl: 'https://groceries.asda.com', imageUrl: 'https://ui.assets-asda.com/dm/asdagroceries/3329770062481_T1?defaultImage=asdagroceries/noImage&resMode=sharp2&id=K2mTf0&fmt=jpg&fit=constrain,1&wid=288&hei=288', productName: 'Frubes Strawberry Flavour Yogurt', productId: 12, productDiscountedPrice: '95p', productPrice: '£2.00' }, { productUrl: 'https://www.debenhams.com/webapp/wcs/stores/servlet/prod_10701_10001_280010307045_-1', hostNameUrl: 'https://www.debenhams.com', imageUrl: 'https://debenhams.scene7.com/is/image/Debenhams//280010307045?wid=675&hei=675&fmt=webp&qlt=90', productName: "Dark Blue '501' 'Sponge Street' Straight Jeans", productId: 35, productDiscountedPrice: 'Now £64.00', productPrice: 'Was £80.00' }, { productUrl: 'https://groceries.morrisons.com/webshop/product/Dr-Beckmann-Colour--Dirt-Collector-/358858011?gclid=CjwKCAiAg9rxBRADEiwAxKDTujtl4OHWRxXqhL81ZsCejLF3hXR_M5UyjQzpgVEB79TifJl4p7cvzBoC_NgQAvD_BwE&gclsrc=aw.ds', hostNameUrl: 'https://groceries.morrisons.com', imageUrl: 'https://groceries.morrisons.com/productImages/358/358858011_0_170x170.jpg?identifier=80aba395e7e49de3adbe10187f384ec3', productName: null, productId: 158, productDiscountedPrice: '\n                    £3\n                ', productPrice: '\n                    £4.50\n                ' }] },
+  });
 }
 
 // The Expo push notification service accepts batches of notifications so
@@ -29,15 +30,16 @@ for (let pushToken of ['ExponentPushToken[4-Xk9qKWOkPtJtXFuyFCB5]']) {
 // recommend you batch your notifications to reduce the number of requests
 // and to compress them (notifications with similar content will get
 // compressed).
-let chunks = expo.chunkPushNotifications(messages);
-let tickets = [];
+const chunks = expo.chunkPushNotifications(messages);
+const tickets = [];
 (async () => {
   // Send the chunks to the Expo push notification service. There are
   // different strategies you could use. A simple one is to send one chunk at a
   // time, which nicely spreads the load out over time:
-  for (let chunk of chunks) {
+  // eslint-disable-next-line no-restricted-syntax
+  for (const chunk of chunks) {
     try {
-      let ticketChunk = await expo.sendPushNotificationsAsync(chunk);
+      const ticketChunk = await expo.sendPushNotificationsAsync(chunk);
       console.log(ticketChunk);
       tickets.push(...ticketChunk);
       // NOTE: If a ticket contains an error code in ticket.details.error, you
@@ -66,8 +68,8 @@ let tickets = [];
 // notifications to devices that have blocked notifications or have uninstalled
 // your app. Expo does not control this policy and sends back the feedback from
 // Apple and Google so you can handle it appropriately.
-let receiptIds = [];
-for (let ticket of tickets) {
+const receiptIds = [];
+for (const ticket of tickets) {
   // NOTE: Not all tickets have IDs; for example, tickets for notifications
   // that could not be enqueued will have error information and no receipt ID.
   if (ticket.id) {
@@ -75,18 +77,18 @@ for (let ticket of tickets) {
   }
 }
 
-let receiptIdChunks = expo.chunkPushNotificationReceiptIds(receiptIds);
+const receiptIdChunks = expo.chunkPushNotificationReceiptIds(receiptIds);
 (async () => {
   // Like sending notifications, there are different strategies you could use
   // to retrieve batches of receipts from the Expo service.
-  for (let chunk of receiptIdChunks) {
+  for (const chunk of receiptIdChunks) {
     try {
-      let receipts = await expo.getPushNotificationReceiptsAsync(chunk);
+      const receipts = await expo.getPushNotificationReceiptsAsync(chunk);
       console.log(receipts);
 
       // The receipts specify whether Apple or Google successfully received the
       // notification and information about an error, if one occurred.
-      for (let receipt of receipts) {
+      for (const receipt of receipts) {
         if (receipt.status === 'ok') {
           continue;
         } else if (receipt.status === 'error') {

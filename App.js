@@ -3,10 +3,10 @@ import React from 'react';
 import DefaultView from './components/DefaultView';
 import Store from './Store';
 
-export default App = () => {
-  return (
-    <Store>
-      <DefaultView />
-    </Store>
-  )
-}
+const App = () => (
+  <Store>
+    <DefaultView />
+  </Store>
+);
+
+export default App;
