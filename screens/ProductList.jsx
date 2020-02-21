@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { TextInput, View, Text, Button, Image, ImageBackground, StyleSheet, ScrollView, SafeAreaView, FlatList } from 'react-native';
+import { TextInput, View, Text, Button, Image, ImageBackground, StyleSheet, ScrollView, SafeAreaView, FlatList, StatusBar } from 'react-native';
 import { Linking } from 'expo';
 import { UserProducts } from '../services/userProducts';
+
 
 const Product = (props) => {
   const { productUrl, hostName, imageUrl, productName, productId, isActive, isPromo, productDiscountedPrice, productPrice } = props.product;
@@ -43,18 +44,20 @@ const Product = (props) => {
 
 const ProductList = () => {
   const [userProducts, setUserProducts] = useState([]);
+
   useEffect(() => {
     UserProducts.getUserProducts()
       .then((userProd) => setUserProducts(userProd))
       .catch(console.log);
   }, []);
 
-  const sortedPromotion = userProducts.sort((a, b) => b.isPromo - a.isPromo);
+  const promotionItems = userProducts.filter(({ isPromo }) => isPromo);
+
   return (
     <SafeAreaView>
       <View style={styles.container}>
         <FlatList
-          data={sortedPromotion}
+          data={promotionItems}
           renderItem={({ item }) => <Product product={item} />}
           keyExtractor={(item) => item.productId.toString()}
         />
