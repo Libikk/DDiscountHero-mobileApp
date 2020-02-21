@@ -38,6 +38,8 @@ const MyTabs = () => (
   </Tab.Navigator>
 );
 
-export default AppBottomTabNavigator = () => (
+const AppBottomTabNavigator = () => (
   <MyTabs />
 );
+
+export default AppBottomTabNavigator;
