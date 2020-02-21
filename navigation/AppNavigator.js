@@ -1,14 +1,13 @@
 import React, { useContext } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import Home from '../screens/Home';
 import LoginPage from '../screens/LoginPage';
 import { UserDataContext } from '../Store';
 import AppBottomTabNavigator from './AppBottomTabNavigator';
 
 const Stack = createStackNavigator();
 
-export default AppNavigator = () => {
+const AppNavigator = () => {
   const [userData] = useContext(UserDataContext);
 
   const initialRouteName = userData ? 'Home' : 'LoginPage';
@@ -21,3 +20,5 @@ export default AppNavigator = () => {
     </NavigationContainer>
   );
 };
+
+export default AppNavigator;
