@@ -1,7 +1,6 @@
-import axios from 'axios';
-import appConfig from '../appConfig';
+import axiosInstance from '../axiosInstance';
 
 export class UserProducts {
 
-    static getUserProducts = async () => axios.get(`${appConfig.ddiscountHeroUrl}/api/product/getUserProducts`).then(({ data }) => data);
+    static getUserProducts = async () => axiosInstance.get('/api/product/getUserProducts').then(({ data }) => data);
 }

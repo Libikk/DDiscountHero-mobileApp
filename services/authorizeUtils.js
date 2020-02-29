@@ -1,5 +1,4 @@
-import axios from 'axios';
-import appConfig from '../appConfig';
+import axiosInstance from '../axiosInstance';
 import { loadData, saveData } from './localStorageService';
 
 export const getCookie = (name, cookie) => {
@@ -10,8 +9,7 @@ export const getCookie = (name, cookie) => {
 
 export const authorize = async () => {
   const token = await loadData('userToken');
-
-  return axios.post(`${appConfig.ddiscountHeroUrl}/api/auth/authorize`, { token })
+  return axiosInstance.post('/api/auth/authorize', { token })
     .then((res) => {
       const newToken = getCookie('access_token', res.headers['set-cookie'][0]);
       saveData('userToken', newToken);
