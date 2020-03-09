@@ -1,19 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import { TextInput, View, Text, Button, Image, ImageBackground, StyleSheet, ScrollView, SafeAreaView, FlatList, StatusBar } from 'react-native';
+import { View, Text, TouchableOpacity, Image, StyleSheet, SafeAreaView, FlatList, StatusBar } from 'react-native';
 import { Linking } from 'expo';
 import { UserProducts } from '../services/userProducts';
 
 
 const Product = (props) => {
   const { productUrl, hostName, imageUrl, productName, productId, isActive, isPromo, productDiscountedPrice, productPrice } = props.product;
-
+  const image = imageUrl ? { uri: imageUrl } : require('../assets/images/no-image.jpg')
   return (
     <View style={styles.singleProductWrapper}>
       <Text>{hostName}</Text>
       <View>
-        {imageUrl ? <Image style={{ resizeMode: 'center', width: 150, height: 150 }} source={{ uri: imageUrl }} /> : null}
+        <Image style={{ resizeMode: 'center', width: 130, height: 130 }} source={image} />
       </View>
-      <Button onPress={() => Linking.openURL(productUrl)} title="Open product" />
+      <TouchableOpacity onPress={() => Linking.openURL(productUrl)}>
+        <Text style={{ fontWeight: 'bold', fontSize: 18, color: "#249624", marginVertical: 10, backgroundColor: '#d6cfc7', padding: 5 }}>Open product</Text>
+      </TouchableOpacity>
       <Text>{productName}</Text>
       <View style={styles.body}>
         {(productDiscountedPrice && productPrice)
@@ -34,7 +36,7 @@ const Product = (props) => {
           )
           : (
             <View>
-              <Text>Product prices are not available yet</Text>
+              <Text style={{ color: 'orange', marginBottom: 10 }}>Product prices preview is not available</Text>
             </View>
           )}
       </View>
@@ -69,8 +71,7 @@ const ProductList = () => {
 const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
-    alignItems: 'center',
-    padding: 15,
+    padding: 30,
   },
   greenColor: {
     color: '#3fc23f',
@@ -79,6 +80,9 @@ const styles = StyleSheet.create({
   singleProductWrapper: {
     justifyContent: 'center',
     alignItems: 'center',
+    borderBottomColor: 'grey',
+    borderBottomWidth: 2,
+    marginBottom: 15,
   },
 });
 

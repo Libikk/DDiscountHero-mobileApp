@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { TextInput, View, Text, Button, Image } from 'react-native';
+import { Image, Button } from 'react-native';
+import { View, Form, Input, Text, Item, Label } from 'native-base';
 import updatePushNotificationToken from '../services/updatePushNotificationToken';
 import { Sentry } from '../errorHandler';
 import { saveData } from '../services/localStorageService';
@@ -48,20 +49,26 @@ const LoginPage = (props) => {
       <View style={{ width: '100%', justifyContent: 'center', alignItems: 'center' }}>
         <Image style={{ resizeMode: 'center' }} source={require('../assets/images/logo.png')} />
       </View>
-      <View style={{ margin: 40, alignItems: 'center' }}>
-        <TextInput
-          style={{ marginTop: 20, fontSize: 20 }}
-          value={email}
-          onChangeText={setEmail}
-          placeholder="Email"
-        />
-        <TextInput
-          style={{ marginTop: 20, fontSize: 20 }}
-          value={password}
-          onChangeText={setPassword}
-          placeholder="Password"
-        />
-      </View>
+      <Form style={{ marginBottom: 30 }}>
+        <Item floatingLabel>
+          <Label>Email</Label>
+          <Input
+            style={{ marginTop: 20, fontSize: 20 }}
+            value={email}
+            onChangeText={setEmail}
+            error={isError}
+          />
+        </Item>
+        <Item floatingLabel>
+          <Label>Password</Label>
+          <Input
+            style={{ marginTop: 20, fontSize: 20 }}
+            value={password}
+            onChangeText={setPassword}
+            error={isError}
+          />
+        </Item>
+      </Form>
       {
         isError && (
         <View style={{ alignItems: 'center' }}>
