@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import { Image, Button } from 'react-native';
-import axios from 'axios';
 import { View, Form, Input, Text, Item, Label } from 'native-base';
 import updatePushNotificationToken from '../services/updatePushNotificationToken';
-import appConfig from '../appConfig';
 import { Sentry } from '../errorHandler';
 import { saveData } from '../services/localStorageService';
 import { getCookie } from '../services/authorizeUtils';
+import axiosInstance from '../axiosInstance';
 
 const LoginPage = (props) => {
   const [email, setEmail] = useState('');
@@ -26,7 +25,7 @@ const LoginPage = (props) => {
     };
     setIsError(false);
 
-    axios.post(`${appConfig.ddiscountHeroUrl}/api/auth/login`, data)
+    axiosInstance.post('/api/auth/login', data)
       .then((res) => {
         saveToken(res);
         props.navigation.navigate('Home');
@@ -77,7 +76,8 @@ const LoginPage = (props) => {
             Invalid email or password
           </Text>
         </View>
-        )}
+        )
+}
       <Button color="#249624" title="Login" onPress={login} />
     </View>
   );
