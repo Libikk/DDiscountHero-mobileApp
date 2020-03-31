@@ -31,7 +31,9 @@ const LoginPage = (props) => {
         props.navigation.navigate('Home');
         updatePushNotificationToken()
           .then((e) => console.log('Successfully updated  token'))
-          .catch((err) => console.log('Error', err));
+          .catch((err) => {
+            console.log('ERRORRdata: ', err.response.data.message)
+          });
       })
       .catch((err) => {
         setIsError(true);
@@ -62,8 +64,10 @@ const LoginPage = (props) => {
         <Item floatingLabel>
           <Label>Password</Label>
           <Input
+            secureTextEntry
             style={{ marginTop: 20, fontSize: 20 }}
             value={password}
+            passwordRules={{ length: 4 }}
             onChangeText={setPassword}
             error={isError}
           />
