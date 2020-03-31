@@ -26,7 +26,7 @@ const MyTabs = () => (
       }}
     />
     <Tab.Screen
-      name="LoginPage"
+      name="ProductList"
       component={ProductList}
       options={{
         tabBarLabel: 'Products on Sale',
