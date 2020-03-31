@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, Image, AsyncStorage, TouchableOpacity } from 'react-native';
 import { MaterialCommunityIcons } from 'react-native-vector-icons';
+import Colors from '../constants/Colors';
 
 const Home = (props) => {
   const logout = () => {
@@ -10,7 +11,9 @@ const Home = (props) => {
   return (
     <View style={{ padding: 30 }}>
       <TouchableOpacity onPress={logout}>
-        <MaterialCommunityIcons name="logout" />
+        <View style={{ alignItems: 'flex-end', marginTop: 10 }}>
+          <MaterialCommunityIcons name="logout" size={28} color={Colors.tintColor} />
+        </View>
       </TouchableOpacity>
       <View style={{ width: '100%', justifyContent: 'center', alignItems: 'center' }}>
         <Image style={{ resizeMode: 'center' }} source={require('../assets/images/logo.png')} />
